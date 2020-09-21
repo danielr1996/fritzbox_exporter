@@ -11,12 +11,19 @@ to prometheus.
 
 This exporter is tested with a Fritzbox 7490 and 7390 with software version 06.51.
 
-## Building (Uses Go Modules, so no GO Path required)
+# Running with pre compiled binaries
+Download the version appropiate for your os and architecture from [github](https://github.com/danielr1996/fritzbox_exporter/releases)
 
+Run with `./fritzbox_exporter-<os>-arch>`
+
+## Building (Uses Go Modules, so no GO Path required)
+To cross compile simple change the values of GOOS and GOARCH ([list of supported OS and ARCH](https://gist.github.com/asukakenji/f15ba7e588ac42795f421b48b8aede63))
+    
+    
     git clone https://github.com/danielr1996/fritzbox_exporter.git
     cd fritzbox_exporter
     go install # Install the binary to $GOROOT/bin
-    go build -o fritzbox_exporter # Build a binary in the local directory
+    GOOS=linux GOARCH=amd64 go build -o fritzbox_exporter # Build a binary in the local directory
     go run main.go # Run directly without creating an executable
 
 ## Running
