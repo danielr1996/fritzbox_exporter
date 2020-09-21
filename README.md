@@ -1,16 +1,23 @@
 # Fritz!Box Upnp statistics exporter for prometheus
 
+> Fork of https://github.com/ndecker/fritzbox_exporter
+> Changes to the original version:
+> * Use Go modules with Go >=1.11
+> * provide prebuilt binaries (especially for armv64 because compilation on a raspberry pi is terribly slow)
+
 This exporter exports some variables from an 
 [AVM Fritzbox](http://avm.de/produkte/fritzbox/)
 to prometheus.
 
 This exporter is tested with a Fritzbox 7490 and 7390 with software version 06.51.
 
-## Building
+## Building (Uses Go Modules, so no GO Path required)
 
-    go get github.com/ndecker/fritzbox_exporter/
-    cd $GOPATH/src/github.com/ndecker/fritzbox_exporter
-    go install
+    git clone https://github.com/danielr1996/fritzbox_exporter.git
+    cd fritzbox_exporter
+    go install # Install the binary to $GOROOT/bin
+    go build -o fritzbox_exporter # Build a binary in the local directory
+    go run main.go # Run directly without creating an executable
 
 ## Running
 
@@ -19,7 +26,7 @@ Heimnetzübersicht > Netzwerkeinstellungen" has to be enabled.
 
 Usage:
 
-    $GOPATH/bin/fritzbox_exporter -h
+    fritzbox_exporter -h
     Usage of ./fritzbox_exporter:
       -gateway-address string
         	The hostname or IP of the FRITZ!Box (default "fritz.box")
