@@ -1,0 +1,29 @@
+name: Go
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platforms: [linux/amd64, linux/arm, linux/arm64, windows/amd64]
+    steps:
+      - name: Set up Go 1.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.15
+        id: go
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+      - name: Build
+        run: GOOS=$(echo '${{ matrix.platforms }}' | cut -d'/' -f1) GOARCH=$(echo '${{ matrix.platforms }}' | cut -d'/' -f2)  go build -o fritzbox_exporter-$(echo '${{ matrix.platforms }}' | cut -d'/' -f1)-$(echo '${{ matrix.platforms }}' | cut -d'/' -f2)
+      - uses: actions/upload-artifact@v2
+        with:
+          name: fritzbox_exporter
+          path: fritzbox_exporter*
